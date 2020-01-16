@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+<h1>products</h1>
+
+    <table id="example" class="table table-striped" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Rating</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Thumb</th>
+                <th>Color</th>
+                <th>Qunatity</th>
+                <th>Likes</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.title }}</td>
+                <td>{{ product.rating }}</td>
+                <td>{{ product.description }}</td>
+                <td>{{ product.price }}</td>
+                <td><img src="{{ asset('images/'~product.thumb) }}" alt=""></td>
+                <td>{{ product.color }}</td>
+                <td>{{ product.qunatity }}</td>
+                <td>{{ product.likes }}</td>
+                <td>
+                    <a href="{{ path('product_show', {'id': product.id}) }}">show</a>
+                    <a href="{{ path('product_edit', {'id': product.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="10">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h1>Create new Product</h1>
+
+    {{ include('product/_form.html.twig') }}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('#example').dataTable({
+
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            }],
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            }
+        });
+    </script>
+{% endblock %}

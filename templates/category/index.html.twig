@@ -1,0 +1,55 @@
+{%  extends 'base.html.twig' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12"> <h1>Categories</h1></div>
+    <div class="col-12">
+
+    <table id="example" class="table table-striped" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.name }}</td>
+                <td>
+                    <a href="{{ path('category_show', {'id': category.id}) }}">show</a>
+                    <a href="{{ path('category_edit', {'id': category.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+       <div class="col-12">
+    <h1>Create new category</h1>
+
+           {{ include('category/_form.html.twig') }}</div>
+</div>
+{% endblock %}
+{% block javascripts %}
+    <script>
+        $('#example').dataTable({
+
+            columnDefs: [{
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            }],
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            }
+        });
+    </script>
+{% endblock %}
